@@ -4,6 +4,7 @@ CREATE TABLE tecnicos (
     nombre VARCHAR(50) NOT NULL
 );
 
+-- Requires the "terminales" table from lecciones-01-03.sql (run that file first)
 CREATE TABLE visitas (
     id SERIAL PRIMARY KEY,
     terminal_id INT NOT NULL REFERENCES terminales(id),
@@ -21,11 +22,14 @@ INSERT INTO visitas (terminal_id, tecnico_id, fecha, tipo) VALUES
     (3, 2, '2026-11-12', 'mantenimiento'),
     (5, 1, '2026-11-15', 'reparación');
 
--- List the serial, date, and type of all visits along with the corresponding terminal serial
+-- List the date and type of every visit with its terminal serial
 SELECT t.serial, v.fecha, v.tipo FROM visitas v JOIN terminales t ON v.terminal_id = t.id;
 
 -- List the name of the technician, terminal serial, and type of visit for all visits
-SELECT te.nombre, t.serial, v.tipo FROM visitas v JOIN terminales t ON v.terminal_id = t.id JOIN tecnicos te  ON v.tecnico_id  = te.id;
+SELECT te.nombre, t.serial, v.tipo
+FROM visitas v
+JOIN terminales t ON v.terminal_id = t.id
+JOIN tecnicos te  ON v.tecnico_id  = te.id;
 
 -- List the name of the technician and the total number of visits they have made, including technicians with zero visits 
 SELECT te.nombre, COUNT(v.id) AS total FROM tecnicos te LEFT JOIN visitas v ON v.tecnico_id = te.id GROUP BY te.nombre;
