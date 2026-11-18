@@ -4,7 +4,7 @@ CREATE TABLE tecnicos (
     nombre VARCHAR(50) NOT NULL
 );
 
--- Requires the "terminales" table from lecciones-01-03.sql (run that file first)
+-- Requires the "terminales" table from lessons-01-03-basics.sql (run that file first)
 CREATE TABLE visitas (
     id SERIAL PRIMARY KEY,
     terminal_id INT NOT NULL REFERENCES terminales(id),
